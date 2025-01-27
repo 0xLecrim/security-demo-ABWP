@@ -6,45 +6,70 @@ import SqlInjectionDemo from './components/SqlInjectionDemo';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-5xl mx-auto space-y-8">
+      <main className="container mx-auto px-4 py-12">
+        <div className="max-w-5xl mx-auto space-y-12">
           {/* Introduction */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">About This Demo</h2>
-            <div className="prose max-w-none">
-              <p className="text-gray-600">
-                This application demonstrates two important security concepts in web development:
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">About This Demo</h2>
+              <p className="text-gray-300 mt-1">
+                Understanding security concepts through practical examples
               </p>
-              <ul className="list-disc list-inside text-gray-600 mt-2 space-y-2">
-                <li>
-                  <span className="font-semibold">AES Encryption:</span>{" "}
-                  Shows how to securely encrypt and decrypt messages using the Advanced Encryption Standard.
-                </li>
-                <li>
-                  <span className="font-semibold">SQL Injection:</span>{" "}
-                  Demonstrates a common security vulnerability and how to prevent it using parameterized queries.
-                </li>
-              </ul>
+            </div>
+            <div className="p-6">
+              <div className="prose max-w-none">
+                <p className="text-gray-600">
+                  This application demonstrates two important security concepts in web development:
+                </p>
+                <ul className="list-none space-y-4 mt-4">
+                  <li className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg text-gray-900">AES Encryption</h3>
+                      <p className="text-gray-600">Shows how to securely encrypt and decrypt messages using the Advanced Encryption Standard.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg text-gray-900">SQL Injection</h3>
+                      <p className="text-gray-600">Demonstrates a common security vulnerability and how to prevent it using parameterized queries.</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
           {/* Demo Components */}
-          <div className="space-y-8">
+          <div className="space-y-12">
             <EncryptionDemo />
             <SqlInjectionDemo />
           </div>
 
-          {/* SQL Injection Detailed Explanation */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Jak działa SQL Injection?</h2>
-            
-            <div className="space-y-6">
+          {/* SQL Injection Explanation */}
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">Jak działa SQL Injection?</h2>
+              <p className="text-gray-300 mt-1">
+                Szczegółowe wyjaśnienie mechanizmu ataku i obrony
+              </p>
+            </div>
+            <div className="p-6 space-y-6">
               <section>
                 <h3 className="text-xl font-semibold mb-2">1. Podatna implementacja</h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-xl">
                   <p className="mb-2">W podatnej implementacji, zapytanie SQL jest tworzone przez proste łączenie ciągów znaków:</p>
                   <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
                     {`const query = \`SELECT * FROM users 
@@ -57,7 +82,7 @@ export default function Home() {
 
               <section>
                 <h3 className="text-xl font-semibold mb-2">2. Przykład ataku</h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-xl">
                   <p className="mb-2">Atakujący może wprowadzić specjalnie spreparowany ciąg znaków:</p>
                   <code className="bg-gray-800 text-white px-3 py-1 rounded">admin' --</code>
                   <p className="mt-2">Co przekształca oryginalne zapytanie w:</p>
@@ -75,7 +100,7 @@ WHERE username = 'admin' --' AND password = 'cokolwiek'`}
 
               <section>
                 <h3 className="text-xl font-semibold mb-2">3. Bezpieczna implementacja</h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-xl">
                   <p className="mb-2">Bezpieczna implementacja używa zapytań parametryzowanych:</p>
                   <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
                     {`const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
@@ -91,46 +116,13 @@ db.get(query, [username, password], (err, row) => {
                   </ul>
                 </div>
               </section>
-
-              <section>
-                <h3 className="text-xl font-semibold mb-2">4. Dlaczego to działa?</h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="mb-2">W przypadku zapytań parametryzowanych:</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>Struktura zapytania i dane są przesyłane osobno</li>
-                    <li>Baza danych najpierw kompiluje zapytanie, a potem podstawia parametry</li>
-                    <li>Znaki specjalne w parametrach nie mogą zmienić struktury zapytania</li>
-                    <li>Nawet jeśli użytkownik wprowadzi kod SQL, zostanie on potraktowany jako zwykły tekst</li>
-                  </ul>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-xl font-semibold mb-2">5. Dodatkowe zabezpieczenia</h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>Walidacja danych wejściowych (długość, dozwolone znaki)</li>
-                    <li>Ograniczanie uprawnień użytkownika bazy danych</li>
-                    <li>Szyfrowanie haseł w bazie danych</li>
-                    <li>Monitorowanie nietypowych zapytań</li>
-                    <li>Używanie ORM (Object-Relational Mapping)</li>
-                  </ul>
-                </div>
-              </section>
             </div>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-gray-300 py-8 mt-16">
-        <div className="container mx-auto px-4 text-center">
-          <p>Security Demo Application - Built with Next.js and TypeScript</p>
-          <p className="mt-2 text-sm">
-            Note: This is a demonstration application. Do not use these exact implementations in production.
-          </p>
-        </div>
-      </footer>
+      
     </div>
   );
 }

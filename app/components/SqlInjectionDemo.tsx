@@ -20,49 +20,62 @@ const LoginForm = ({ title, isVulnerable, onSubmit, hint }: LoginFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h3 className="font-semibold text-lg">{title}</h3>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Username
-        </label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Enter username"
-        />
+    <div className={`bg-white rounded-xl shadow-md overflow-hidden border-2 ${
+      isVulnerable ? 'border-red-200' : 'border-green-200'
+    }`}>
+      <div className={`px-4 py-3 ${
+        isVulnerable 
+          ? 'bg-gradient-to-r from-red-500 to-red-600' 
+          : 'bg-gradient-to-r from-green-500 to-green-600'
+      }`}>
+        <h3 className="text-lg font-semibold text-white">{title}</h3>
       </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Password
-        </label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Enter password"
-        />
-      </div>
-      <button
-        type="submit"
-        disabled={loading}
-        className={`w-full py-2 px-4 rounded-lg text-white transition-colors ${
-          isVulnerable 
-            ? "bg-red-600 hover:bg-red-700" 
-            : "bg-green-600 hover:bg-green-700"
-        }`}
-      >
-        {loading ? "Loading..." : "Login"}
-      </button>
-      {hint && (
-        <p className="text-sm text-gray-600 mt-2">
-          <span className="font-medium">Hint:</span> {hint}
-        </p>
-      )}
-    </form>
+
+      <form onSubmit={handleSubmit} className="p-4 space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Username
+          </label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter username"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Password
+          </label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter password"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full py-2 px-4 rounded-lg text-white transition-all transform hover:scale-105 ${
+            isVulnerable 
+              ? 'bg-red-500 hover:bg-red-600' 
+              : 'bg-green-500 hover:bg-green-600'
+          }`}
+        >
+          {loading ? "Loading..." : "Login"}
+        </button>
+        {hint && (
+          <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-sm text-yellow-800">
+              <span className="font-medium">Hint:</span> {hint}
+            </p>
+          </div>
+        )}
+      </form>
+    </div>
   );
 };
 
@@ -99,32 +112,57 @@ export default function SqlInjectionDemo() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4">SQL Injection Demo</h2>
-      <p className="text-gray-600 mb-6">
-        Demonstrate SQL injection vulnerability and its prevention
-      </p>
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-purple-500 to-purple-600 px-6 py-4">
+        <h2 className="text-2xl font-bold text-white">SQL Injection Demo</h2>
+        <p className="text-purple-100 mt-1">
+          Demonstrate SQL injection vulnerability and its prevention
+        </p>
+      </div>
 
-      <div className="space-y-6">
-        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+      <div className="p-6 space-y-6">
+        {/* How It Works Section */}
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4">
           <button 
             onClick={() => setShowExplanation(!showExplanation)}
-            className="text-yellow-800 font-semibold mb-2 hover:text-yellow-900"
+            className="flex items-center gap-2 text-purple-700 font-semibold hover:text-purple-800 transition-colors"
           >
+            <svg 
+              className={`w-5 h-5 transform transition-transform ${showExplanation ? 'rotate-90' : ''}`}
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
             {showExplanation ? "Hide" : "Show"} How It Works
           </button>
+          
           {showExplanation && (
-            <div className="text-sm text-gray-700 space-y-2">
-              <p>1. The vulnerable login form uses direct string interpolation in SQL queries</p>
-              <p>2. Try logging in with: <code className="bg-gray-100 px-2 py-1 rounded">admin' --</code></p>
-              <p>3. This injection makes the password check irrelevant</p>
-              <p>4. The secure login form uses parameterized queries to prevent injection</p>
-              <p>5. The same attack won't work on the secure form</p>
+            <div className="mt-3 text-sm text-gray-600 space-y-2 pl-7">
+              <p className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-semibold">1</span>
+                The vulnerable form uses direct string concatenation in SQL queries
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-semibold">2</span>
+                Try the SQL injection attack with the provided hint
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-semibold">3</span>
+                Notice how the vulnerable form can be bypassed
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-semibold">4</span>
+                The secure form prevents the same attack
+              </p>
             </div>
           )}
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Login Forms */}
+        <div className="grid md:grid-cols-2 gap-6">
           <LoginForm
             title="Vulnerable Login"
             isVulnerable={true}
@@ -138,13 +176,18 @@ export default function SqlInjectionDemo() {
           />
         </div>
 
+        {/* Result Display */}
         {result && (
-          <div className={`p-4 rounded-lg ${
+          <div className={`p-4 rounded-xl ${
             result.includes("successful")
-              ? "bg-green-50 border border-green-200"
-              : "bg-red-50 border border-red-200"
+              ? 'bg-green-50 border border-green-200'
+              : 'bg-red-50 border border-red-200'
           }`}>
-            <p className="text-gray-700">{result}</p>
+            <p className={`${
+              result.includes("successful") ? 'text-green-800' : 'text-red-800'
+            }`}>
+              {result}
+            </p>
           </div>
         )}
       </div>
